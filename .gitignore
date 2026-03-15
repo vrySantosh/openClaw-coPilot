@@ -1,0 +1,43 @@
+# Sensitive credentials & tokens
+credentials/
+identity/
+devices/
+
+# Agent auth profiles (contain API tokens)
+agents/*/agent/auth-profiles.json
+
+# Agent session transcripts (may contain private conversations)
+agents/*/sessions/
+
+# Config with real tokens — use openclaw.example.json as template
+openclaw.json
+openclaw.json.bak*
+
+# Exec approvals (contains socket token)
+exec-approvals.json
+exec-approvals.sock
+
+# Runtime logs
+logs/
+executor-log.txt
+integration.log
+
+# Installed OpenClaw binary and libraries (large, install via `npm i -g openclaw`)
+bin/
+lib/
+
+# Bundled tools (large binaries)
+tools/
+
+# Update check state
+update-check.json
+
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# VS Code workspace settings
+.vscode/
+
+# Shell completions (auto-generated)
+completions/

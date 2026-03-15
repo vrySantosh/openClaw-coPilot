@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.13"
+  },
+  "auth": {
+    "profiles": {
+      "github-copilot:github": {
+        "provider": "github-copilot",
+        "mode": "token"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "github-copilot/gpt-5-mini"
+      },
+      "models": {
+        "openrouter/google/gemma-3-27b-it:free": {},
+        "github-copilot/gpt-4o": {},
+        "github-copilot/gpt-5-mini": {}
+      },
+      "workspace": "~/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      }
+    },
+    "list": [
+      {
+        "id": "main"
+      },
+      {
+        "id": "vyra",
+        "name": "Vyra",
+        "workspace": "~/.openclaw/workspace",
+        "model": "github-copilot/gpt-4o",
+        "identity": {
+          "name": "Vyra",
+          "emoji": "✨"
+        }
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "agentId": "vyra",
+      "match": {
+        "channel": "whatsapp",
+        "accountId": "default"
+      }
+    }
+  ],
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "channels": {
+    "whatsapp": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": ["+YOUR_PHONE_NUMBER"],
+      "groupAllowFrom": ["+YOUR_PHONE_NUMBER"],
+      "groupPolicy": "allowlist",
+      "debounceMs": 0,
+      "mediaMaxMb": 50
+    },
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "groupPolicy": "allowlist",
+      "streaming": "partial"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "REPLACE_WITH_YOUR_GATEWAY_TOKEN",
+      "allowTailscale": true
+    },
+    "tailscale": {
+      "mode": "serve"
+    },
+    "remote": {}
+  },
+  "plugins": {
+    "entries": {
+      "whatsapp": {
+        "enabled": true
+      },
+      "telegram": {
+        "enabled": true
+      }
+    }
+  }
+}
