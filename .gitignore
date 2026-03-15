@@ -1,3 +1,9 @@
+# ==========================
+# OpenClaw Setup Repository
+# ==========================
+# This .gitignore is designed to prevent ANY sensitive or runtime
+# data from being accidentally committed to a public repository.
+
 # Sensitive credentials & tokens
 credentials/
 identity/
@@ -9,7 +15,10 @@ agents/*/agent/auth-profiles.json
 # Agent session transcripts (may contain private conversations)
 agents/*/sessions/
 
-# Config with real tokens — use openclaw.example.json as template
+# Agent model configs (generated per-install)
+agents/*/agent/models.json
+
+# Live config with real tokens — use openclaw.example.json as template
 openclaw.json
 openclaw.json.bak*
 
@@ -29,6 +38,14 @@ lib/
 # Bundled tools (large binaries)
 tools/
 
+# Runtime workspace & state
+workspace/
+vscode-workspace/
+canvas/
+cron/
+settings/
+delivery-queue/
+
 # Update check state
 update-check.json
 
@@ -41,3 +58,7 @@ update-check.json
 
 # Shell completions (auto-generated)
 completions/
+
+# Node
+node_modules/
+media/

@@ -4,10 +4,11 @@
 
 set -e
 
-EXECUTOR_PATH="/Users/santosh/.openclaw/vscode-executor.js"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+EXECUTOR_PATH="${SCRIPT_DIR}/vscode-executor.js"
 SKILL_NAME="vscode-remote-executor"
-WORKSPACE_DIR="/Users/santosh/.openclaw/vscode-workspace"
-LOG_FILE="/Users/santosh/.openclaw/integration.log"
+WORKSPACE_DIR="${HOME}/.openclaw/vscode-workspace"
+LOG_FILE="${HOME}/.openclaw/integration.log"
 
 # Color codes
 RED='\033[0;31m'

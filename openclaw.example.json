@@ -33,7 +33,7 @@
         "id": "vyra",
         "name": "Vyra",
         "workspace": "~/.openclaw/workspace",
-        "model": "github-copilot/gpt-4o",
+        "model": "github-copilot/gpt-5-mini",
         "identity": {
           "name": "Vyra",
           "emoji": "✨"
