@@ -1,0 +1,3 @@
+# Repository-level ignore exceptions
+# Allow tracking of the mascot image only
+!assets/IMG_2680.png
