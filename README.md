@@ -2,7 +2,7 @@
   <img src="assets/IMG_2680.png" alt="OpenClaw Mascot" style="max-width: 400px;" />
 </p>
 
-[![Brave Frog](https://img.shields.io/badge/Brave-Frog-4caf50.svg)](https://example.com) [![Vibe](https://img.shields.io/badge/Vibe-%F0%9F%90%B8-brightgreen.svg)](https://example.com) [![Made with ❤️](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red.svg)](https://example.com)
+[![Brave Frog](https://img.shields.io/badge/Brave-Frog-4caf50.svg)](https://example.com) [![Vyra Frog](https://img.shields.io/badge/Vyra-Frog-4caf50.svg)](https://example.com) [![Made with ❤️](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red.svg)](https://example.com)
 
 # OpenClaw + GitHub Copilot Setup
 
