@@ -2,6 +2,8 @@
   <img src="assets/IMG_2680.png" alt="OpenClaw Mascot" style="max-width: 400px;" />
 </p>
 
++ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Build Status](https://github.com/vrySantosh/openClaw-coPilot/actions/workflows/ci.yml/badge.svg)](https://github.com/vrySantosh/openClaw-coPilot/actions)
+
 # openClaw-coPilot
 
 A Copilot-style developer assistant built on top of OpenClaw. This project provides an integration layer and operator tooling to safely spawn and orchestrate coding agents (Codex, Claude Code, Pi, OpenCode) for code generation, PR review, refactoring, and developer workflows.
