@@ -2,7 +2,9 @@
   <img src="assets/IMG_2680.png" alt="OpenClaw Mascot" style="max-width: 400px;" />
 </p>
 
-+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Build Status](https://github.com/vrySantosh/openClaw-coPilot/actions/workflows/ci.yml/badge.svg)](https://github.com/vrySantosh/openClaw-coPilot/actions)
++ 
+
+[![Brave Frog](https://img.shields.io/badge/Brave-Frog-4caf50.svg)](https://example.com) [![Vibe](https://img.shields.io/badge/Vibe-%F0%9F%90%B8-brightgreen.svg)](https://example.com) [![Made with ❤️](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red.svg)](https://example.com)
 
 # openClaw-coPilot
 
