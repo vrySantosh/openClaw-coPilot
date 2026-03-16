@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="assets/IMG_2680.png" alt="OpenClaw Mascot" style="max-width: 400px;" />
+</p>
+
 # OpenClaw + GitHub Copilot Setup
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Build Status](https://github.com/vrySantosh/openClaw-coPilot/actions/workflows/ci.yml/badge.svg)](https://github.com/vrySantosh/openClaw-coPilot/actions)
 
 Run AI agents on WhatsApp, Telegram, and Slack using [OpenClaw](https://docs.openclaw.ai) powered by GitHub Copilot's free models (GPT-5 mini, GPT-4o).
 
