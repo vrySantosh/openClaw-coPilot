@@ -1,11 +1,13 @@
 # OpenClaw + GitHub Copilot Setup
 
-Run AI agents on WhatsApp and Telegram using [OpenClaw](https://docs.openclaw.ai) powered by GitHub Copilot's free models (GPT-5 mini, GPT-4o).
+Run AI agents on WhatsApp, Telegram, and Slack using [OpenClaw](https://docs.openclaw.ai) powered by GitHub Copilot's free models (GPT-5 mini, GPT-4o).
 
 ## What This Does
 
 - Connects OpenClaw to GitHub Copilot as the LLM backend (free with a GitHub account)
-- Sets up a WhatsApp/Telegram chatbot powered by GPT-5 mini
+- Sets up a WhatsApp/Telegram/Slack chatbot powered by GPT-5 mini
+- Local voice transcription via [whisper.cpp](https://github.com/ggerganov/whisper.cpp) (OpenAI Whisper model, runs fully offline)
+- Text-to-speech synthesis via Coqui TTS (optional)
 - Optionally runs a VS Code remote executor for file/command operations via chat
 
 ## Prerequisites
@@ -13,7 +15,7 @@ Run AI agents on WhatsApp and Telegram using [OpenClaw](https://docs.openclaw.ai
 - macOS (Linux support is experimental)
 - [Node.js](https://nodejs.org/) v22+
 - A GitHub account with [Copilot](https://github.com/features/copilot) access (free tier works)
-- A phone number for WhatsApp, or a Telegram bot token
+- A phone number for WhatsApp, or a Telegram bot token, or a Slack workspace
 
 ## Quick Start
 
@@ -66,6 +68,107 @@ openclaw gateway
 
 Send a message to yourself on WhatsApp — the agent will reply.
 
+## Slack Integration
+
+OpenClaw supports Slack as a chat channel using Socket Mode (no public URL required).
+
+### 1. Create a Slack App
+
+1. Go to [api.slack.com/apps](https://api.slack.com/apps) → **Create New App** → **From scratch**
+2. Under **Socket Mode**, enable it and generate an **App-Level Token** (`xapp-...`) with `connections:write` scope
+3. Under **OAuth & Permissions**, add these Bot Token Scopes:
+   - `chat:write`
+   - `app_mentions:read`
+   - `im:history`
+   - `im:read`
+   - `im:write`
+4. Under **Event Subscriptions**, enable events and subscribe to:
+   - `message.im`
+   - `app_mention`
+5. Install the app to your workspace and copy the **Bot User OAuth Token** (`xoxb-...`)
+
+### 2. Connect Slack to OpenClaw
+
+```bash
+openclaw channels add --channel slack --bot-token xoxb-YOUR-BOT-TOKEN --app-token xapp-YOUR-APP-TOKEN
+```
+
+Or add the Slack section manually to your `openclaw.json` (see [openclaw.example.json](openclaw.example.json) for the full template).
+
+### 3. Bind an Agent to Slack
+
+Add a Slack binding in `openclaw.json`:
+
+```json
+{
+  "agentId": "vyra",
+  "match": {
+    "channel": "slack",
+    "accountId": "default"
+  }
+}
+```
+
+Restart the gateway — your agent will now respond to DMs and @mentions in Slack.
+
+## Local Voice Transcription (OpenAI Whisper)
+
+The `voice-local/` directory contains a fully local, offline voice transcription pipeline using [whisper.cpp](https://github.com/ggerganov/whisper.cpp) — a C/C++ port of OpenAI's Whisper model. No API keys, no cloud calls, completely free.
+
+### 1. Install whisper.cpp and Download a Model
+
+```bash
+chmod +x ~/.openclaw/voice-local/install.sh
+~/.openclaw/voice-local/install.sh
+```
+
+Then download the Whisper model:
+
+```bash
+mkdir -p ~/.whisper && cd ~/.whisper
+curl -L -o tiny.en.ggmlv3.q4_0.bin \
+  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/models/ggml-tiny.en.bin
+```
+
+> **Tip:** `tiny.en` is fast and lightweight (~75 MB). For better accuracy, use `base.en` or `small.en`.
+
+### 2. Transcribe an Audio File
+
+```bash
+~/.openclaw/voice-local/transcribe.sh /path/to/audio.wav
+```
+
+Outputs a `.txt` file alongside the audio with the transcript.
+
+### 3. Run the Voice Server (Optional)
+
+A minimal Express server that accepts audio uploads and returns transcriptions:
+
+```bash
+cd ~/.openclaw/voice-local && npm install express multer
+node ~/.openclaw/voice-local/server.js
+```
+
+POST audio (multipart `audio` field) to `http://localhost:3003/transcribe`:
+
+```bash
+curl -F "audio=@recording.wav" http://localhost:3003/transcribe
+# → {"transcript": "Hello, this is a test."}
+```
+
+> **Security note:** The voice server is local-only by default. Do not expose it publicly without adding TLS and authentication.
+
+### 4. Text-to-Speech (Optional)
+
+Coqui TTS can synthesize speech locally:
+
+```bash
+python3 -m venv ~/.uix-voice-venv
+source ~/.uix-voice-venv/bin/activate
+pip install TTS soundfile
+~/.openclaw/voice-local/synthesize.sh "Hello from OpenClaw" output.wav
+```
+
 ## Configuration
 
 See [openclaw.example.json](openclaw.example.json) for a full annotated config template.
@@ -77,8 +180,10 @@ See [openclaw.example.json](openclaw.example.json) for a full annotated config t
 | `agents.defaults.model.primary` | Default LLM model (`github-copilot/gpt-5-mini`) |
 | `channels.whatsapp.allowFrom` | Phone numbers allowed to message the bot |
 | `channels.whatsapp.dmPolicy` | `allowlist` (restricted) or `open` |
+| `channels.slack.botToken` | Slack Bot User OAuth Token (`xoxb-...`) |
+| `channels.slack.appToken` | Slack App-Level Token (`xapp-...`) |
 | `gateway.auth.token` | Gateway authentication token |
-| `bindings` | Maps agents to channels (e.g. Vyra → WhatsApp) |
+| `bindings` | Maps agents to channels (e.g. Vyra → WhatsApp, Slack) |
 
 ### Available Free Models
 
@@ -156,6 +261,12 @@ npm install -g openclaw@latest
 openclaw.example.json   # Template config — copy to ~/.openclaw/openclaw.json
 vscode-executor.js      # VS Code remote command executor (optional)
 integration.sh          # Chat-to-executor bridge script (optional)
+slack-app-manifest.yaml # Slack app setup command reference
+voice-local/            # Local voice transcription & TTS scaffold
+  install.sh            # Builds whisper.cpp and downloads models
+  transcribe.sh         # Transcribe audio files using Whisper
+  synthesize.sh         # Text-to-speech via Coqui TTS
+  server.js             # HTTP server for audio upload → transcription
 ```
 
 ## License

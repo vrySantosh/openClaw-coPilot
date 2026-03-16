@@ -59,6 +59,12 @@ update-check.json
 # Shell completions (auto-generated)
 completions/
 
+# Voice-local: whisper.cpp source/build (large, cloned by install.sh)
+voice-local/whisper.cpp/
+
+# Memory (runtime agent memory)
+memory/
+
 # Node
 node_modules/
 media/

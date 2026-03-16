@@ -1,0 +1,1 @@
+openclaw channels add --channel slack --bot-token xoxb-YOUR-TOKEN --app-token xapp-YOUR-TOKEN

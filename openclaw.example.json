@@ -48,6 +48,13 @@
         "channel": "whatsapp",
         "accountId": "default"
       }
+    },
+    {
+      "agentId": "vyra",
+      "match": {
+        "channel": "slack",
+        "accountId": "default"
+      }
     }
   ],
   "commands": {
@@ -71,6 +78,18 @@
       "dmPolicy": "pairing",
       "groupPolicy": "allowlist",
       "streaming": "partial"
+    },
+    "slack": {
+      "mode": "socket",
+      "webhookPath": "/slack/events",
+      "enabled": true,
+      "botToken": "xoxb-YOUR-BOT-TOKEN",
+      "appToken": "xapp-YOUR-APP-TOKEN",
+      "groupPolicy": "open",
+      "dmPolicy": "open",
+      "allowFrom": ["*"],
+      "nativeStreaming": true,
+      "streaming": "partial"
     }
   },
   "gateway": {
@@ -92,6 +111,9 @@
         "enabled": true
       },
       "telegram": {
+        "enabled": true
+      },
+      "slack": {
         "enabled": true
       }
     }
